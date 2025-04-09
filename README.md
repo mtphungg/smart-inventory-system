@@ -28,4 +28,3 @@ A serverless app that monitors product inventory and sends email alerts when sto
 ## 📬 Example Email Alert
 
 > **Subject:** 🚨 Low Stock Alert  
-> **Body:**
