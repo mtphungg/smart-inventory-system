@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Smart Inventory Dashboard</title>
+  <style>
+    body { font-family: sans-serif; padding: 20px; }
+    .low-stock { color: red; }
+  </style>
+</head>
+<body>
+  <h1>📦 Smart Inventory Dashboard</h1>
+  <div id="inventory"></div>
+
+  <script>
+    fetch('https://ham4q79pr9.execute-api.us-east-2.amazonaws.com/GetInventoryData')
+      .then(response => response.json())
+      .then(data => {
+        const container = document.getElementById('inventory');
+        const items = data.reorder_needed || data.body?.reorder_needed || [];
+        if (items.length === 0) {
+          container.innerHTML = "<p>All inventory is well stocked 🎉</p>";
+        } else {
+          container.innerHTML = "<h3>Items to Reorder:</h3><ul>" +
+            items.map(item => `<li class="low-stock">${item.name} - Stock: ${item.stock}</li>`).join('') +
+            "</ul>";
+        }
+      })
+      .catch(err => {
+        document.getElementById('inventory').innerHTML = `<p>Error fetching data.</p>`;
+        console.error(err);
+      });
+  </script>
+</body>
+</html>
+

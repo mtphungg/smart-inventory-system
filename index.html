@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Smart Inventory System</title>
+  <style>
+    body { font-family: Arial, sans-serif; padding: 20px; }
+    h1 { color: #333; }
+    table { border-collapse: collapse; width: 100%; margin-top: 20px; }
+    th, td { padding: 10px; border: 1px solid #ccc; }
+    th { background-color: #f2f2f2; }
+  </style>
+</head>
+<body>
+  <h1>📦 Smart Inventory System</h1>
+  <table id="inventoryTable">
+    <thead>
+      <tr>
+        <th>Name</th>
+        <th>Stock</th>
+        <th>Reorder Point</th>
+      </tr>
+    </thead>
+    <tbody></tbody>
+  </table>
+
+  <script>
+    fetch("https://ham4q79pr9.execute-api.us-east-2.amazonaws.com")
+      .then(response => response.json())
+      .then(data => {
+        const tableBody = document.querySelector("#inventoryTable tbody");
+        data.reorder_needed.forEach(item => {
+          const row = document.createElement("tr");
+          row.innerHTML = `
+            <td>${item.name}</td>
+            <td>${item.stock}</td>
+            <td>${item.reorder_point}</td>
+          `;
+          tableBody.appendChild(row);
+        });
+      })
+      .catch(error => {
+        console.error("Error fetching inventory:", error);
+      });
+  </script>
+</body>
+</html>
+
