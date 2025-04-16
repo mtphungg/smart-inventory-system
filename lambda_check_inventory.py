@@ -19,7 +19,6 @@ def lambda_handler(event, context):
         for item in reorder_items:
             message_body += f"- {item['name']} (Stock: {item['stock']}, Reorder Point: {item['reorder_point']})\n"
 
-        # Send email
         ses.send_email(
             Source='lucie.phung0205@gmail.com',  
             Destination={'ToAddresses': ['lucie.phung0205@gmail.com']},  
